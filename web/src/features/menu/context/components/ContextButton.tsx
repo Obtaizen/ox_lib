@@ -21,15 +21,22 @@ const useStyles = createStyles((theme, params: { disabled?: boolean; readOnly?: 
   },
   label: {
     width: '100%',
-    color: params.disabled ? theme.colors.dark[3] : theme.colors.dark[0],
+    color: params.disabled ? theme.colors.dark[3] : '#f7f9fd',
     whiteSpace: 'pre-wrap',
+    fontWeight: 700,
+    letterSpacing: 0.6,
+    textTransform: 'uppercase',
+    textShadow: params.disabled ? undefined : '0 1px 2px rgba(0,0,0,0.35)',
   },
   button: {
     height: 'fit-content',
     width: '100%',
-    padding: 10,
+    padding: '10px 12px',
+    background: 'var(--ox-card)',
+    border: `1px solid var(--ox-card-border)`,
+    boxShadow: 'var(--ox-card-shadow)',
     '&:hover': {
-      backgroundColor: params.readOnly ? theme.colors.dark[6] : undefined,
+      backgroundColor: params.readOnly ? theme.colors.dark[6] : 'rgba(255,255,255,0.04)',
       cursor: params.readOnly ? 'unset' : 'pointer',
     },
     '&:active': {
@@ -40,16 +47,17 @@ const useStyles = createStyles((theme, params: { disabled?: boolean; readOnly?: 
     maxWidth: '25px',
   },
   description: {
-    color: params.disabled ? theme.colors.dark[3] : theme.colors.dark[2],
+    color: params.disabled ? theme.colors.dark[3] : theme.colors.dark[1],
     fontSize: 12,
   },
   dropdown: {
     padding: 10,
-    color: theme.colors.dark[0],
+    color: '#f7f9fd',
     fontSize: 14,
     maxWidth: 256,
     width: 'fit-content',
-    border: 'none',
+    border: `1px solid ${theme.colors.dark[4]}`,
+    backgroundColor: theme.colors.dark[8],
   },
   buttonStack: {
     gap: 4,

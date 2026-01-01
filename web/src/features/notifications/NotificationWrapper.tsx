@@ -10,29 +10,31 @@ import LibIcon from '../../components/LibIcon';
 
 const useStyles = createStyles((theme) => ({
   container: {
-    width: 300,
+    width: 320,
     height: 'fit-content',
-    backgroundColor: theme.colors.dark[6],
-    color: theme.colors.dark[0],
+    backgroundColor: 'var(--ox-card)',
+    color: '#f7f9fd',
     padding: 12,
     borderRadius: theme.radius.sm,
-    fontFamily: 'Roboto',
-    boxShadow: theme.shadows.sm,
+    fontFamily: 'Space Grotesk, Roboto, Helvetica Neue, Arial, sans-serif',
+    boxShadow: 'var(--ox-card-shadow)',
+    border: `1px solid var(--ox-card-border)`,
   },
   title: {
-    fontWeight: 500,
+    fontWeight: 700,
     lineHeight: 'normal',
+    letterSpacing: 0.2,
   },
   description: {
-    fontSize: 12,
-    color: theme.colors.dark[2],
-    fontFamily: 'Roboto',
+    fontSize: 13,
+    color: '#d3d7df',
+    fontFamily: 'Space Grotesk, Roboto, Helvetica Neue, Arial, sans-serif',
     lineHeight: 'normal',
   },
   descriptionOnly: {
     fontSize: 14,
-    color: theme.colors.dark[2],
-    fontFamily: 'Roboto',
+    color: '#d3d7df',
+    fontFamily: 'Space Grotesk, Roboto, Helvetica Neue, Arial, sans-serif',
     lineHeight: 'normal',
   },
 }));
@@ -148,49 +150,28 @@ const Notifications: React.FC = () => {
           }}
           className={`${classes.container}`}
         >
-          <Group noWrap spacing={12}>
+          <Group noWrap spacing={12} align="center">
             {data.icon && (
               <>
-                {data.showDuration ? (
-                  <RingProgress
-                    key={toastKey}
-                    size={38}
-                    thickness={2}
-                    sections={[{ value: 100, color: iconColor }]}
-                    style={{ alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start' }}
-                    styles={{
-                      root: {
-                        '> svg > circle:nth-of-type(2)': {
-                          animation: `${durationCircle} linear forwards reverse`,
-                          animationDuration: `${duration}ms`,
-                        },
-                        margin: -3,
-                      },
-                    }}
-                    label={
-                      <Center>
-                        <ThemeIcon
-                          color={iconColor}
-                          radius="xl"
-                          size={32}
-                          variant={tinycolor(iconColor).getAlpha() < 0 ? undefined : 'light'}
-                        >
-                          <LibIcon icon={data.icon} fixedWidth color={iconColor} animation={data.iconAnimation} />
-                        </ThemeIcon>
-                      </Center>
-                    }
-                  />
-                ) : (
-                  <ThemeIcon
-                    color={iconColor}
-                    radius="xl"
-                    size={32}
-                    variant={tinycolor(iconColor).getAlpha() < 0 ? undefined : 'light'}
-                    style={{ alignSelf: !data.alignIcon || data.alignIcon === 'center' ? 'center' : 'start' }}
-                  >
-                    <LibIcon icon={data.icon} fixedWidth color={iconColor} animation={data.iconAnimation} />
-                  </ThemeIcon>
-                )}
+                <ThemeIcon
+                  color="dark.9"
+                  radius="xl"
+                  size={30}
+                  variant="filled"
+                  style={{
+                    background: 'rgba(255,255,255,0.06)',
+                    border: '1px solid rgba(255,255,255,0.08)',
+                  }}
+                >
+                  <LibIcon icon={data.icon} fixedWidth color={iconColor} animation={data.iconAnimation} />
+                </ThemeIcon>
+                <Box
+                  sx={{
+                    width: 1,
+                    height: 20,
+                    background: 'rgba(255,255,255,0.1)',
+                  }}
+                />
               </>
             )}
             <Stack spacing={0}>

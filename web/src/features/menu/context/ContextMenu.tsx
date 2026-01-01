@@ -17,9 +17,10 @@ const useStyles = createStyles((theme) => ({
   container: {
     position: 'absolute',
     top: '15%',
-    right: '25%',
-    width: 320,
+    right: '20%',
+    width: 340,
     height: 580,
+    padding: 8,
   },
   header: {
     justifyContent: 'center',
@@ -28,21 +29,37 @@ const useStyles = createStyles((theme) => ({
     gap: 6,
   },
   titleContainer: {
-    borderRadius: 4,
+    borderRadius: theme.radius.sm,
     flex: '1 85%',
-    backgroundColor: theme.colors.dark[6],
+    background: 'var(--ox-card)',
+    border: `1px solid var(--ox-card-border)`,
+    boxShadow: 'var(--ox-card-shadow)',
+    position: 'relative',
+    overflow: 'hidden',
   },
   titleText: {
-    color: theme.colors.dark[0],
-    padding: 6,
+    color: '#f7f9fd',
+    padding: '8px 10px 6px 10px',
     textAlign: 'center',
+    textTransform: 'uppercase',
+    fontWeight: 800,
+    letterSpacing: 1,
+    textShadow: '0 1px 2px rgba(0,0,0,0.35)',
   },
   buttonsContainer: {
     height: 560,
     overflowY: 'scroll',
+    padding: 4,
+    borderRadius: theme.radius.sm,
+    background: 'var(--ox-card)',
+    border: `1px solid var(--ox-card-border)`,
+    boxShadow: 'var(--ox-card-shadow)',
   },
   buttonsFlexWrapper: {
-    gap: 3,
+    gap: 6,
+  },
+  accent: {
+    display: 'none',
   },
 }));
 
@@ -92,6 +109,7 @@ const ContextMenu: React.FC = () => {
             <HeaderButton icon="chevron-left" iconSize={16} handleClick={() => openMenu(contextMenu.menu)} />
           )}
           <Box className={classes.titleContainer}>
+            <Box className={classes.accent} />
             <Text className={classes.titleText}>
               <ReactMarkdown components={MarkdownComponents}>{contextMenu.title}</ReactMarkdown>
             </Text>

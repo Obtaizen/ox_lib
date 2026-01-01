@@ -1,4 +1,4 @@
-import { Button, Group, Modal, Stack } from '@mantine/core';
+import { Box, Button, createStyles, Group, Modal, Stack } from '@mantine/core';
 import React from 'react';
 import { useNuiEvent } from '../../hooks/useNuiEvent';
 import { useLocales } from '../../providers/LocaleProvider';
@@ -23,7 +23,41 @@ export type FormValues = {
   }[];
 };
 
+const useStyles = createStyles((theme) => ({
+  shell: {
+    position: 'relative',
+    padding: 16,
+    borderRadius: theme.radius.md,
+    background: 'var(--ox-card)',
+    border: `1px solid var(--ox-card-border)`,
+    boxShadow: 'var(--ox-card-shadow)',
+    overflow: 'hidden',
+  },
+  accent: {
+    display: 'none',
+  },
+  title: {
+    textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 0.8,
+    fontWeight: 800,
+    color: '#f7f9fd',
+    marginBottom: 4,
+    textShadow: '0 1px 2px rgba(0,0,0,0.45)',
+  },
+  footer: {
+    marginTop: 6,
+  },
+  fieldBlock: {
+    padding: '8px 10px',
+    borderRadius: theme.radius.sm,
+    background: 'rgba(255,255,255,0.02)',
+    border: `1px solid rgba(255,255,255,0.06)`,
+  },
+}));
+
 const InputDialog: React.FC = () => {
+  const { classes } = useStyles();
   const [fields, setFields] = React.useState<InputProps>({
     heading: '',
     rows: [{ type: 'input', label: '' }],
@@ -41,22 +75,19 @@ const InputDialog: React.FC = () => {
     setFields(data);
     setVisible(true);
     data.rows.forEach((row, index) => {
-      fieldForm.insert(
-        index,
-        {
-          value:
-            row.type !== 'checkbox'
-              ? row.type === 'date' || row.type === 'date-range' || row.type === 'time'
-                ? // Set date to current one if default is set to true
-                  row.default === true
-                  ? new Date().getTime()
-                  : Array.isArray(row.default)
-                  ? row.default.map((date) => new Date(date).getTime())
-                  : row.default && new Date(row.default).getTime()
-                : row.default
-              : row.checked,
-        } || { value: null }
-      );
+      fieldForm.insert(index, {
+  value:
+    (row.type !== 'checkbox'
+      ? row.type === 'date' || row.type === 'date-range' || row.type === 'time'
+        ? // Set date to current one if default is set to true
+          row.default === true
+          ? new Date().getTime()
+          : Array.isArray(row.default)
+          ? row.default.map((date) => new Date(date).getTime())
+          : row.default && new Date(row.default).getTime()
+        : row.default
+      : row.checked) ?? null,
+});
       // Backwards compat with new Select data type
       if (row.type === 'select' || row.type === 'multi-select') {
         row.options = row.options.map((option) =>
@@ -104,56 +135,89 @@ const InputDialog: React.FC = () => {
         closeOnEscape={fields.options?.allowCancel !== false}
         closeOnClickOutside={false}
         size={fields.options?.size || 'xs'}
-        styles={{ title: { textAlign: 'center', width: '100%', fontSize: 18 } }}
-        title={fields.heading}
+        styles={{
+          modal: { background: 'transparent', boxShadow: 'none' },
+          body: { padding: 0 },
+          title: { display: 'none' },
+          header: { display: 'none' },
+        }}
+        title={null}
         withCloseButton={false}
         overlayOpacity={0.5}
         transition="fade"
         exitTransitionDuration={150}
       >
         <form onSubmit={onSubmit}>
-          <Stack>
+          <Box className={classes.shell}>
+            <Box className={classes.accent} />
+            {fields.heading && <div className={classes.title}>{fields.heading}</div>}
+            <Stack spacing={8}>
             {fieldForm.fields.map((item, index) => {
               const row = fields.rows[index];
               return (
                 <React.Fragment key={item.id}>
                   {row.type === 'input' && (
-                    <InputField
-                      register={form.register(`test.${index}.value`, { required: row.required })}
-                      row={row}
-                      index={index}
-                    />
+                    <div className={classes.fieldBlock}>
+                      <InputField
+                        register={form.register(`test.${index}.value`, { required: row.required })}
+                        row={row}
+                        index={index}
+                      />
+                    </div>
                   )}
                   {row.type === 'checkbox' && (
-                    <CheckboxField
-                      register={form.register(`test.${index}.value`, { required: row.required })}
-                      row={row}
-                      index={index}
-                    />
+                    <div className={classes.fieldBlock}>
+                      <CheckboxField
+                        register={form.register(`test.${index}.value`, { required: row.required })}
+                        row={row}
+                        index={index}
+                      />
+                    </div>
                   )}
                   {(row.type === 'select' || row.type === 'multi-select') && (
-                    <SelectField row={row} index={index} control={form.control} />
+                    <div className={classes.fieldBlock}>
+                      <SelectField row={row} index={index} control={form.control} />
+                    </div>
                   )}
-                  {row.type === 'number' && <NumberField control={form.control} row={row} index={index} />}
-                  {row.type === 'slider' && <SliderField control={form.control} row={row} index={index} />}
-                  {row.type === 'color' && <ColorField control={form.control} row={row} index={index} />}
-                  {row.type === 'time' && <TimeField control={form.control} row={row} index={index} />}
+                  {row.type === 'number' && (
+                    <div className={classes.fieldBlock}>
+                      <NumberField control={form.control} row={row} index={index} />
+                    </div>
+                  )}
+                  {row.type === 'slider' && (
+                    <div className={classes.fieldBlock}>
+                      <SliderField control={form.control} row={row} index={index} />
+                    </div>
+                  )}
+                  {row.type === 'color' && (
+                    <div className={classes.fieldBlock}>
+                      <ColorField control={form.control} row={row} index={index} />
+                    </div>
+                  )}
+                  {row.type === 'time' && (
+                    <div className={classes.fieldBlock}>
+                      <TimeField control={form.control} row={row} index={index} />
+                    </div>
+                  )}
                   {row.type === 'date' || row.type === 'date-range' ? (
-                    <DateField control={form.control} row={row} index={index} />
+                    <div className={classes.fieldBlock}>
+                      <DateField control={form.control} row={row} index={index} />
+                    </div>
                   ) : null}
                   {row.type === 'textarea' && (
-                    <TextareaField
-                      register={form.register(`test.${index}.value`, { required: row.required })}
-                      row={row}
-                      index={index}
-                    />
+                    <div className={classes.fieldBlock}>
+                      <TextareaField
+                        register={form.register(`test.${index}.value`, { required: row.required })}
+                        row={row}
+                        index={index}
+                      />
+                    </div>
                   )}
                 </React.Fragment>
               );
             })}
-            <Group position="right" spacing={10}>
+            <Group position="right" spacing={10} className={classes.footer}>
               <Button
-                uppercase
                 variant="default"
                 onClick={() => handleClose()}
                 mr={3}
@@ -161,11 +225,12 @@ const InputDialog: React.FC = () => {
               >
                 {locale.ui.cancel}
               </Button>
-              <Button uppercase variant="light" type="submit">
+              <Button variant="filled" color="accent" type="submit">
                 {locale.ui.confirm}
               </Button>
             </Group>
           </Stack>
+          </Box>
         </form>
       </Modal>
     </>

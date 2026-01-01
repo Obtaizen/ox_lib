@@ -7,11 +7,14 @@ import type { ProgressbarProps } from '../../typings';
 
 const useStyles = createStyles((theme) => ({
   container: {
-    width: 350,
-    height: 45,
-    borderRadius: theme.radius.sm,
-    backgroundColor: theme.colors.dark[5],
+    width: 320,
+    height: 28,
+    borderRadius: theme.radius.xs,
+    backgroundColor: 'var(--ox-track)',
+    border: `1px solid var(--ox-track-edge)`,
+    boxShadow: 'var(--ox-shadow)',
     overflow: 'hidden',
+    position: 'relative',
   },
   wrapper: {
     width: '100%',
@@ -24,25 +27,34 @@ const useStyles = createStyles((theme) => ({
   },
   bar: {
     height: '100%',
-    backgroundColor: theme.colors[theme.primaryColor][theme.fn.primaryShade()],
+    width: '100%',
+    backgroundColor: 'var(--ox-fill)',
+    boxShadow: 'inset 0 0 0 1px rgba(0, 0, 0, 0.65)',
+    position: 'absolute',
+    inset: 0,
   },
   labelWrapper: {
     position: 'absolute',
     display: 'flex',
-    width: 350,
-    height: 45,
+    inset: 0,
     alignItems: 'center',
     justifyContent: 'center',
+    zIndex: 2,
+    pointerEvents: 'none',
   },
   label: {
-    maxWidth: 350,
-    padding: 8,
+    maxWidth: 290,
+    padding: '4px 10px',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
     whiteSpace: 'nowrap',
-    fontSize: 20,
-    color: theme.colors.gray[3],
-    textShadow: theme.shadows.sm,
+    fontSize: 16,
+    fontWeight: 800,
+    letterSpacing: 1,
+    color: 'var(--ox-text-strong)',
+    textTransform: 'uppercase',
+    textShadow:
+      '1px 1px 0 #0b0d11, -1px -1px 0 #0b0d11, -1px 1px 0 #0b0d11, 1px -1px 0 #0b0d11, 0 0 4px rgba(0,0,0,0.35)',
   },
 }));
 
@@ -71,11 +83,11 @@ const Progressbar: React.FC = () => {
               sx={{
                 animation: 'progress-bar linear',
                 animationDuration: `${duration}ms`,
+                animationFillMode: 'forwards',
               }}
-            >
-              <Box className={classes.labelWrapper}>
-                <Text className={classes.label}>{label}</Text>
-              </Box>
+            />
+            <Box className={classes.labelWrapper}>
+              <Text className={classes.label}>{label}</Text>
             </Box>
           </Box>
         </ScaleFade>
