@@ -28,18 +28,28 @@ const useStyles = createStyles((theme, params: { position?: MenuPosition; itemCo
     bottom: params.position === 'bottom-left' || params.position === 'bottom-right' ? 1 : undefined,
     fontFamily: 'Roboto',
     width: 384,
+    background: 'transparent',
+    backgroundImage: 'none',
+    boxShadow: 'none',
+    border: 'none',
   },
   buttonsWrapper: {
     height: 'fit-content',
     maxHeight: 415,
     overflow: 'hidden',
     borderRadius: params.itemCount <= 6 || params.selected === params.itemCount - 1 ? theme.radius.md : undefined,
-    backgroundColor: theme.colors.dark[8],
+    backgroundColor: 'transparent',
+    backgroundImage: 'none',
+    boxShadow: 'none',
+    border: 'none',
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
   },
   scrollArrow: {
-    backgroundColor: theme.colors.dark[8],
+    backgroundColor: 'transparent',
+    backgroundImage: 'none',
+    boxShadow: 'none',
+    border: 'none',
     textAlign: 'center',
     borderBottomLeftRadius: theme.radius.md,
     borderBottomRightRadius: theme.radius.md,
@@ -217,9 +227,17 @@ const ListMenu: React.FC = () => {
         >
           <Box className={classes.container}>
             <Header title={menu.title} />
-            <Box className={classes.buttonsWrapper} onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => moveMenu(e)}>
+            <Box
+              className={classes.buttonsWrapper}
+              sx={{ background: 'transparent', backgroundImage: 'none', boxShadow: 'none', border: 'none' }}
+              onKeyDown={(e: React.KeyboardEvent<HTMLDivElement>) => moveMenu(e)}
+            >
               <FocusTrap active={visible}>
-                <Stack spacing={8} p={8} sx={{ overflowY: 'scroll' }}>
+                <Stack
+                  spacing={8}
+                  p={8}
+                  sx={{ overflowY: 'scroll', background: 'transparent', backgroundImage: 'none', boxShadow: 'none', border: 'none' }}
+                >
                   {menu.items.map((item, index) => (
                     <React.Fragment key={`menu-item-${index}`}>
                       {item.label && (

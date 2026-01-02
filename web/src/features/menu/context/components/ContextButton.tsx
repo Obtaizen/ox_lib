@@ -36,7 +36,9 @@ const useStyles = createStyles((theme, params: { disabled?: boolean; readOnly?: 
     border: `1px solid var(--ox-card-border)`,
     boxShadow: 'var(--ox-card-shadow)',
     '&:hover': {
-      backgroundColor: params.readOnly ? theme.colors.dark[6] : 'rgba(255,255,255,0.04)',
+      backgroundColor: params.readOnly ? theme.colors.dark[6] : 'var(--ox-card)',
+      borderColor: params.readOnly ? theme.colors.dark[6] : 'rgba(255,255,255,0.2)',
+      boxShadow: params.readOnly ? 'var(--ox-card-shadow)' : '0 0 0 1px rgba(255,255,255,0.1)',
       cursor: params.readOnly ? 'unset' : 'pointer',
     },
     '&:active': {

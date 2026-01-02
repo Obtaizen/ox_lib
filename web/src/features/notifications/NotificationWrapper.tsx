@@ -125,16 +125,16 @@ const Notifications: React.FC = () => {
     if (!data.iconColor) {
       switch (data.type) {
         case 'error':
-          iconColor = 'red.6';
+          iconColor = '#e74c3c';
           break;
         case 'success':
-          iconColor = 'teal.6';
+          iconColor = '#2ecc71';
           break;
         case 'warning':
-          iconColor = 'yellow.6';
+          iconColor = '#e74c3c';
           break;
         default:
-          iconColor = 'blue.6';
+          iconColor = '#ff9a3c';
           break;
       }
     } else {
