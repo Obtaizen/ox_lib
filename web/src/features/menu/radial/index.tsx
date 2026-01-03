@@ -16,7 +16,7 @@ const useStyles = createStyles((theme) => ({
     left: '50%',
     transform: 'translate(-50%, -50%)',
     filter: 'drop-shadow(0 18px 36px rgba(0, 0, 0, 0.55))',
-    backdropFilter: 'blur(2px)',
+    backgroundColor: 'transparent',
   },
   sector: {
     fill: 'url(#radialSectorGradient)',
@@ -38,7 +38,7 @@ const useStyles = createStyles((theme) => ({
     },
   },
   backgroundCircle: {
-    fill: 'rgba(6, 8, 12, 0.85)',
+    fill: 'rgba(10, 14, 22, 0.92)',
     stroke: 'rgba(255, 255, 255, 0.08)',
     strokeWidth: 1.5,
     filter: 'drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55))',
@@ -163,9 +163,8 @@ const RadialMenu: React.FC = () => {
           >
             <defs>
               <linearGradient id="radialSectorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stopColor="rgba(255, 255, 255, 0.06)" />
-                <stop offset="35%" stopColor="rgba(24, 28, 42, 0.85)" />
-                <stop offset="100%" stopColor="rgba(8, 10, 16, 0.95)" />
+                <stop offset="0%" stopColor="rgba(28, 34, 52, 0.95)" />
+                <stop offset="100%" stopColor="rgba(12, 15, 24, 0.97)" />
               </linearGradient>
               <linearGradient id="radialSectorHover" x1="0%" y1="0%" x2="100%" y2="100%">
                 <stop offset="0%" stopColor="rgba(104, 211, 255, 0.85)" />
