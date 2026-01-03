@@ -10,11 +10,13 @@ import LibIcon from '../../../components/LibIcon';
 
 const useStyles = createStyles((theme, params: { position?: MenuPosition; itemCount: number; selected: number }) => ({
   tooltip: {
-    backgroundColor: theme.colors.dark[6],
-    color: theme.colors.dark[2],
+    backgroundColor: 'rgba(10, 12, 18, 0.92)',
+    color: theme.white,
     borderRadius: theme.radius.sm,
     maxWidth: 350,
     whiteSpace: 'normal',
+    boxShadow: '0 6px 16px rgba(0, 0, 0, 0.35)',
+    border: '1px solid rgba(255, 255, 255, 0.08)',
   },
   container: {
     position: 'absolute',
@@ -27,7 +29,7 @@ const useStyles = createStyles((theme, params: { position?: MenuPosition; itemCo
     left: params.position === 'bottom-left' ? 1 : undefined,
     bottom: params.position === 'bottom-left' || params.position === 'bottom-right' ? 1 : undefined,
     fontFamily: 'Roboto',
-    width: 384,
+    width: 410,
     background: 'transparent',
     backgroundImage: 'none',
     boxShadow: 'none',
@@ -35,13 +37,13 @@ const useStyles = createStyles((theme, params: { position?: MenuPosition; itemCo
   },
   buttonsWrapper: {
     height: 'fit-content',
-    maxHeight: 415,
+    maxHeight: 445,
     overflow: 'hidden',
     borderRadius: params.itemCount <= 6 || params.selected === params.itemCount - 1 ? theme.radius.md : undefined,
-    backgroundColor: 'transparent',
-    backgroundImage: 'none',
-    boxShadow: 'none',
-    border: 'none',
+    backgroundColor: 'rgba(10, 12, 18, 0.9)',
+    backgroundImage: 'linear-gradient(180deg, rgba(255,255,255,0.02) 0%, rgba(255,255,255,0) 100%)',
+    boxShadow: '0 10px 25px rgba(0, 0, 0, 0.45)',
+    border: '1px solid rgba(255, 255, 255, 0.08)',
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
   },
@@ -234,9 +236,15 @@ const ListMenu: React.FC = () => {
             >
               <FocusTrap active={visible}>
                 <Stack
-                  spacing={8}
-                  p={8}
-                  sx={{ overflowY: 'scroll', background: 'transparent', backgroundImage: 'none', boxShadow: 'none', border: 'none' }}
+                  spacing={10}
+                  p={10}
+                  sx={{
+                    overflowY: 'scroll',
+                    background: 'transparent',
+                    backgroundImage: 'none',
+                    boxShadow: 'none',
+                    border: 'none',
+                  }}
                 >
                   {menu.items.map((item, index) => (
                     <React.Fragment key={`menu-item-${index}`}>

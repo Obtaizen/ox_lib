@@ -15,34 +15,42 @@ const useStyles = createStyles((theme) => ({
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
+    filter: 'drop-shadow(0 18px 36px rgba(0, 0, 0, 0.55))',
+    backdropFilter: 'blur(2px)',
   },
   sector: {
-    fill: theme.colors.dark[6],
-    color: theme.colors.dark[0],
-
+    fill: 'url(#radialSectorGradient)',
+    stroke: 'rgba(255, 255, 255, 0.08)',
+    strokeWidth: 1,
+    color: '#e9edf5',
+    transition: 'fill 120ms ease, stroke 120ms ease',
     '&:hover': {
-      fill: theme.fn.primaryColor(),
+      fill: 'url(#radialSectorHover)',
+      stroke: 'rgba(104, 211, 255, 0.5)',
       cursor: 'pointer',
       '> g > text, > g > svg > path': {
         fill: '#fff',
       },
     },
     '> g > text': {
-      fill: theme.colors.dark[0],
+      fill: '#e9edf5',
       strokeWidth: 0,
     },
   },
   backgroundCircle: {
-    fill: theme.colors.dark[6],
+    fill: 'rgba(6, 8, 12, 0.85)',
+    stroke: 'rgba(255, 255, 255, 0.08)',
+    strokeWidth: 1.5,
+    filter: 'drop-shadow(0 8px 18px rgba(0, 0, 0, 0.55))',
   },
   centerCircle: {
-    fill: theme.fn.primaryColor(),
+    fill: 'url(#radialCenter)',
     color: '#fff',
-    stroke: theme.colors.dark[6],
-    strokeWidth: 4,
+    stroke: 'rgba(255, 255, 255, 0.22)',
+    strokeWidth: 3,
     '&:hover': {
       cursor: 'pointer',
-      fill: theme.colors[theme.primaryColor][theme.fn.primaryShade() - 1],
+      filter: 'drop-shadow(0 0 14px rgba(104, 211, 255, 0.85))',
     },
   },
   centerIconContainer: {
@@ -54,6 +62,7 @@ const useStyles = createStyles((theme) => ({
   },
   centerIcon: {
     color: '#fff',
+    filter: 'drop-shadow(0 2px 6px rgba(0,0,0,0.45))',
   },
 }));
 
@@ -152,6 +161,21 @@ const RadialMenu: React.FC = () => {
             viewBox="0 0 350 350"
             transform="rotate(90)"
           >
+            <defs>
+              <linearGradient id="radialSectorGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="rgba(255, 255, 255, 0.06)" />
+                <stop offset="35%" stopColor="rgba(24, 28, 42, 0.85)" />
+                <stop offset="100%" stopColor="rgba(8, 10, 16, 0.95)" />
+              </linearGradient>
+              <linearGradient id="radialSectorHover" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="rgba(104, 211, 255, 0.85)" />
+                <stop offset="100%" stopColor="rgba(30, 128, 255, 0.9)" />
+              </linearGradient>
+              <linearGradient id="radialCenter" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stopColor="#1e80ff" />
+                <stop offset="100%" stopColor="#68d3ff" />
+              </linearGradient>
+            </defs>
             {/* Fixed issues with background circle extending the circle when there's less than 3 items */}
             <g transform="translate(175, 175)">
               <circle r={175} className={classes.backgroundCircle} />
@@ -168,6 +192,7 @@ const RadialMenu: React.FC = () => {
               const iconY = 175 + cosAngle * radius + iconYOffset; // Apply the Y offset to iconY
               const iconWidth = Math.min(Math.max(item.iconWidth || 50, 0), 100);
               const iconHeight = Math.min(Math.max(item.iconHeight || 50, 0), 100);
+              const isHighlighted = item.isMore;
 
               return (
                 <g
@@ -185,6 +210,10 @@ const RadialMenu: React.FC = () => {
                     d={`M175.01,175.01 l${175 - gap},0 A175.01,175.01 0 0,0 ${
                       175 + (175 - gap) * Math.cos(-degToRad(pieAngle))
                     }, ${175 + (175 - gap) * Math.sin(-degToRad(pieAngle))} z`}
+                    style={{
+                      fill: isHighlighted ? 'url(#radialSectorHover)' : undefined,
+                      stroke: isHighlighted ? 'rgba(104, 211, 255, 0.6)' : undefined,
+                    }}
                   />
                   <g transform={`rotate(${index * pieAngle - 90} ${iconX} ${iconY})`} pointerEvents="none">
                     {typeof item.icon === 'string' && isIconUrl(item.icon) ? (

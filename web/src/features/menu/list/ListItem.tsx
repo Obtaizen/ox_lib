@@ -15,48 +15,60 @@ interface Props {
 
 const useStyles = createStyles((theme, params: { iconColor?: string }) => ({
   buttonContainer: {
-    backgroundColor: theme.colors.dark[6],
+    background: 'linear-gradient(135deg, rgba(32, 38, 52, 0.95) 0%, rgba(22, 26, 36, 0.95) 100%)',
     borderRadius: theme.radius.md,
-    padding: 2,
-    height: 60,
-    scrollMargin: 8,
-    '&:focus': {
-      backgroundColor: theme.colors.dark[4],
+    padding: 10,
+    height: 72,
+    scrollMargin: 10,
+    border: '1px solid rgba(255, 255, 255, 0.08)',
+    boxShadow: '0 6px 14px rgba(0, 0, 0, 0.35)',
+    transition: 'border-color 120ms ease, box-shadow 120ms ease, transform 120ms ease',
+    '&:focus, &:hover': {
+      borderColor: '#4dabf7',
+      boxShadow: '0 10px 20px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(77, 171, 247, 0.35)',
       outline: 'none',
+      transform: 'translateY(-1px)',
     },
   },
   iconImage: {
     maxWidth: 32,
+    filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.35))',
   },
   buttonWrapper: {
-    paddingLeft: 5,
-    paddingRight: 12,
+    paddingLeft: 2,
+    paddingRight: 6,
     height: '100%',
+    alignItems: 'center',
   },
   iconContainer: {
     display: 'flex',
     alignItems: 'center',
-    width: 32,
-    height: 32,
+    justifyContent: 'center',
+    width: 36,
+    height: 36,
+    borderRadius: 10,
+    background: 'rgba(255, 255, 255, 0.05)',
   },
   icon: {
-    fontSize: 24,
-    color: params.iconColor || theme.colors.dark[2],
+    fontSize: 22,
+    color: params.iconColor || theme.white,
+    filter: 'drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3))',
   },
   label: {
-    color: theme.colors.dark[2],
+    color: 'rgba(255, 255, 255, 0.6)',
     textTransform: 'uppercase',
-    fontSize: 12,
+    fontSize: 11,
     verticalAlign: 'middle',
+    letterSpacing: 0.6,
   },
   chevronIcon: {
     fontSize: 14,
-    color: theme.colors.dark[2],
+    color: 'rgba(255, 255, 255, 0.65)',
   },
   scrollIndexValue: {
-    color: theme.colors.dark[2],
+    color: 'rgba(255, 255, 255, 0.8)',
     textTransform: 'uppercase',
-    fontSize: 14,
+    fontSize: 13,
   },
   progressStack: {
     width: '100%',
@@ -65,6 +77,13 @@ const useStyles = createStyles((theme, params: { iconColor?: string }) => ({
   progressLabel: {
     verticalAlign: 'middle',
     marginBottom: 3,
+    color: theme.white,
+    fontWeight: 600,
+  },
+  primaryText: {
+    color: theme.white,
+    fontSize: 15,
+    fontWeight: 600,
   },
 }));
 
@@ -101,7 +120,7 @@ const ListItem = forwardRef<Array<HTMLDivElement | null>, Props>(({ item, index,
           <Group position="apart" w="100%">
             <Stack spacing={0} justify="space-between">
               <Text className={classes.label}>{item.label}</Text>
-              <Text>
+              <Text className={classes.primaryText}>
                 {typeof item.values[scrollIndex] === 'object'
                   ? // @ts-ignore for some reason even checking the type TS still thinks it's a string
                     item.values[scrollIndex].label
@@ -118,7 +137,7 @@ const ListItem = forwardRef<Array<HTMLDivElement | null>, Props>(({ item, index,
           </Group>
         ) : item.checked !== undefined ? (
           <Group position="apart" w="100%">
-            <Text>{item.label}</Text>
+            <Text className={classes.primaryText}>{item.label}</Text>
             <CustomCheckbox checked={checked}></CustomCheckbox>
           </Group>
         ) : item.progress !== undefined ? (
@@ -126,12 +145,16 @@ const ListItem = forwardRef<Array<HTMLDivElement | null>, Props>(({ item, index,
             <Text className={classes.progressLabel}>{item.label}</Text>
             <Progress
               value={item.progress}
-              color={item.colorScheme || 'dark.0'}
-              styles={(theme) => ({ root: { backgroundColor: theme.colors.dark[3] } })}
+              color={item.colorScheme || 'blue'}
+              radius="md"
+              styles={(theme) => ({
+                root: { backgroundColor: 'rgba(255, 255, 255, 0.08)' },
+                bar: { boxShadow: '0 2px 6px rgba(0,0,0,0.25)' },
+              })}
             />
           </Stack>
         ) : (
-          <Text>{item.label}</Text>
+          <Text className={classes.primaryText}>{item.label}</Text>
         )}
       </Group>
     </Box>
