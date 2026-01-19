@@ -9,7 +9,8 @@ export const theme: MantineThemeOverride = {
   colorScheme: 'dark',
   fontFamily: 'Space Grotesk, \"Roboto Condensed\", Roboto, \"Helvetica Neue\", Arial, sans-serif',
   radius: { xs: 2, sm: 3, md: 4, lg: 6, xl: 8 },
-  primaryColor: 'accent',
+  primaryColor: 'dark',
+  primaryShade: 8,
   defaultRadius: 'sm',
   colors: {
     dark: slate as any,

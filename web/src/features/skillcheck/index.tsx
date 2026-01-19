@@ -27,7 +27,7 @@ const useStyles = createStyles((theme, params: { difficultyOffset: number }) => 
   },
   track: {
     fill: 'transparent',
-    stroke: theme.colors.dark[5],
+    stroke: theme.colors.dark[8],
     strokeWidth: 8,
     r: 50,
     cx: 250,
@@ -41,7 +41,7 @@ const useStyles = createStyles((theme, params: { difficultyOffset: number }) => 
   },
   skillArea: {
     fill: 'transparent',
-    stroke: theme.fn.primaryColor(),
+    stroke: theme.white,
     strokeWidth: 8,
     r: 50,
     cx: 250,
